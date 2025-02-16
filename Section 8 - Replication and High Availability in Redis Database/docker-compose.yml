@@ -1,0 +1,64 @@
+version: '3.9'
+
+services:
+  redis-master:
+    image: redis:latest
+    container_name: redis-master
+    command: ["redis-server", "/usr/local/etc/redis/redis.conf"]
+    ports:
+      - "6379:6379"
+    volumes:
+      - ./redis-master/redis.conf:/usr/local/etc/redis/redis.conf
+
+  redis-replica1:
+    image: redis:latest
+    container_name: redis-replica1
+    command: ["redis-server", "/usr/local/etc/redis/redis.conf"]
+    ports:
+      - "6380:6379"
+    volumes:
+      - ./redis-replica1/redis.conf:/usr/local/etc/redis/redis.conf
+
+  redis-replica2:
+    image: redis:latest
+    container_name: redis-replica2
+    command: ["redis-server", "/usr/local/etc/redis/redis.conf"]
+    ports:
+      - "6381:6379"
+    volumes:
+      - ./redis-replica2/redis.conf:/usr/local/etc/redis/redis.conf
+
+  sentinel1:
+    image: redis:latest
+    container_name: redis-sentinel1
+    command: ["redis-server", "/usr/local/etc/sentinel.conf", "--sentinel"]
+    ports:
+      - "26379:26379"
+    volumes:
+      - ./sentinel1/sentinel.conf:/usr/local/etc/sentinel.conf
+
+  sentinel2:
+    image: redis:latest
+    container_name: redis-sentinel2
+    command: ["redis-server", "/usr/local/etc/sentinel.conf", "--sentinel"]
+    ports:
+      - "26380:26379"
+    volumes:
+      - ./sentinel2/sentinel.conf:/usr/local/etc/sentinel.conf
+
+  sentinel3:
+    image: redis:latest
+    container_name: redis-sentinel3
+    command: ["redis-server", "/usr/local/etc/sentinel.conf", "--sentinel"]
+    ports:
+      - "26381:26379"
+    volumes:
+      - ./sentinel3/sentinel.conf:/usr/local/etc/sentinel.conf
+
+volumes:
+  redis-master:
+  redis-replica1:
+  redis-replica2:
+  sentinel1:
+  sentinel2:
+  sentinel3:
